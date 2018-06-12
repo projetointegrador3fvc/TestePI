@@ -1,0 +1,111 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      template="/Template/modelo/ModeloPaginas.xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
+       <ui:define name="conteudo">
+    <h:body>
+        <h:form>
+            <p:panel header="Comprar Passagem">
+        <p:toolbar>
+            
+            <p:toolbarGroup>
+               
+                <p:commandButton value="Adicionar" action="#{passagemBean.salvar()}" update="@form" icon="ui-icon-newwin"></p:commandButton>
+                <p:commandButton value="Listar"  update="@form"></p:commandButton>
+            </p:toolbarGroup>
+        </p:toolbar>
+        <p:fieldset legend="Passagem">
+            <p:panelGrid columns="2">
+            
+                <p:outputLabel value="Origem"/>
+                <h:selectOneMenu id="selectOrigem"
+                  value="#{passagemBean.passagem.cidadeOrigem}">
+                 <f:selectItems
+                     value="#{cidadeBean.cidadeNomeList()}" />
+               </h:selectOneMenu>
+                
+                <p:outputLabel value="Destino"/>
+               <h:selectOneMenu id="selectDestino"
+                  value="#{passagemBean.passagem.cidadeDestino}">
+                 <f:selectItems
+                     value="#{cidadeBean.cidadeNomeList()}" />
+               </h:selectOneMenu>
+                
+                <p:outputLabel value="Veiculo"/>
+               <h:selectOneMenu id="selectVeiculo"
+                     value="#{passagemBean.passagem.idVeiculo}">
+                 <f:selectItems
+                     value="#{veiculoBean.idVeiculoList()}" />
+               </h:selectOneMenu> 
+               
+                <p:panelGrid columns="2">
+                <h:outputLabel value="Poltrona"></h:outputLabel>
+                <p:inputText value="#{passagemBean.passagem.poltrona}"/>                
+                <h:outputLabel value="valorPassagem"></h:outputLabel>                
+                <p:inputText readonly="false" value="#{passagemBean.passagem.valorPassagem}"/>
+                <h:selectOneRadio id="idavolta" value="#{passagemBean.percurso}">                    
+                    <f:selectItem itemValue="1" itemLabel="Ida" />
+                    <f:selectItem itemValue="2" itemLabel="Ida e Volta"/>
+                </h:selectOneRadio>
+                <p:commandButton value="OK" action="#{passagemBean.gerarValor(passagem)}"/>
+                <p:outputLabel value="Data de saida" />
+                <p:calendar pattern="dd/MM/yyyy" locale="pt" id="datasaida" value="#{passagemBean.passagem.dataSaida}"/>           
+                <p:outputLabel value="Data de volta" />
+                <p:calendar pattern="dd/MM/yyyy" locale="pt" id="datavolta" value="#{passagemBean.passagem.dataVolta}"/>
+                </p:panelGrid>
+                 
+            
+        
+                       
+                
+               
+
+           
+            </p:panelGrid>
+           
+            <p:dataTable value="#{passagemBean.passagens}" var="passagem">
+                <p:column headerText="Operação">
+                    <p:commandButton value="Editar" action="#{passagemBean.editarPassagem(passagem)}" update="@form" icon="ui-icon-gear"></p:commandButton>
+                    <p:commandButton value="Excluir" action="#{passagemBean.excluirPassagem(passagem)}" update="@form" icon="ui-icon-trash"></p:commandButton>
+                </p:column>
+              
+                <p:column headerText="ID" sortBy="#{passagem.idPassagem}">
+                    <h:outputText value="#{passagem.idPassagem}"></h:outputText>
+                </p:column>
+                <p:column headerText="ID-Veiculo" sortBy="#{passagem.idVeiculo}">
+                    <h:outputText value="#{passagem.idVeiculo}"></h:outputText>
+                </p:column>
+                <p:column headerText="Origem" sortBy="#{passagem.cidadeOrigem}">
+                    <h:outputText value="#{passagem.cidadeOrigem}"></h:outputText>
+                </p:column>
+                <p:column headerText="Destino" sortBy="#{passagem.cidadeDestino}">
+                    <h:outputText value="#{passagem.cidadeDestino}"></h:outputText>
+                </p:column>
+                <p:column headerText="Valor" sortBy="#{passagem.valorPassagem}">
+                    <h:outputText value="#{passagem.valorPassagem}"></h:outputText>
+                </p:column>
+                <p:column headerText="Poltrona" sortBy="#{passagem.poltrona}">
+                    <h:outputText value="#{passagem.poltrona}"></h:outputText>
+                </p:column>
+                <p:column headerText="Data Saida" sortBy="#{passagem.dataSaida}">
+                    <h:outputText value="#{passagem.dataSaida}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Data Volta" sortBy="#{passagem.dataVolta}">
+                    <h:outputText value="#{passagem.dataVolta}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+                
+               
+            </p:dataTable>
+            </p:fieldset>
+            </p:panel>        
+        </h:form>       
+    </h:body>
+    </ui:define>
+</ui:composition>

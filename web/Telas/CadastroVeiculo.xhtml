@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      template="/Template/modelo/ModeloPaginas.xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
+    <ui:define name="conteudo">
+    <h:body>
+        <h:form>
+            <p:panel header="Cadastro de veículo">
+        <p:toolbar>
+            
+            <p:toolbarGroup>
+               
+                <p:commandButton value="Adicionar" action="#{veiculoBean.salvar()}" update="@form"></p:commandButton>
+                <p:commandButton value="Listar"  update="@form"></p:commandButton>
+            </p:toolbarGroup>
+        </p:toolbar>
+        <p:fieldset legend="Objetos">
+            <p:panelGrid columns="4">
+            
+
+                <h:outputLabel value="nº Veículo"></h:outputLabel>
+                <p:inputText value="#{veiculoBean.veiculo.numero}"></p:inputText>
+                <h:outputLabel value="Motorista"></h:outputLabel>
+                <p:inputText value="#{veiculoBean.veiculo.motorista}"></p:inputText>
+
+                <h:outputLabel value="Placa"></h:outputLabel>
+                <p:inputText value="#{veiculoBean.veiculo.placa}"></p:inputText>
+                <h:outputLabel value="Modelo"></h:outputLabel>
+                <p:inputText value="#{veiculoBean.veiculo.modelo}"></p:inputText>
+                <h:outputLabel value="Poltronas"></h:outputLabel>
+                <p:inputText value="#{veiculoBean.veiculo.qtdPoltronas}"></p:inputText>
+                
+                
+               
+
+           
+            </p:panelGrid>
+           
+            <p:dataTable value="#{veiculoBean.veiculos}" var="veiculo">
+                <p:column headerText="Operação">
+                    <p:commandButton value="Editar" action="#{veiculoBean.editarVeiculo(veiculo)}" update="@form"></p:commandButton>
+                    <p:commandButton value="Excluir" action="#{veiculoBean.excluirVeiculo(veiculo)}" update="@form"></p:commandButton>
+                </p:column>
+              
+                <p:column headerText="Nº veículo" sortBy="#{veiculo.numero}">
+                    <h:outputText value="#{veiculo.numero}"></h:outputText>
+                </p:column>
+                <p:column headerText="Placa" sortBy="#{veiculo.placa}">
+                    <h:outputText value="#{veiculo.placa}"></h:outputText>
+                </p:column>
+                <p:column headerText="Modelo" sortBy="#{veiculo.modelo}">
+                    <h:outputText value="#{veiculo.modelo}"></h:outputText>
+                </p:column>
+                <p:column headerText="Motorista" sortBy="#{veiculo.motorista}">
+                    <h:outputText value="#{veiculo.motorista}"></h:outputText>
+                </p:column>
+                <p:column headerText="Qtd. Poltronas" sortBy="#{veiculo.qtdPoltronas}">
+                    <h:outputText value="#{veiculo.qtdPoltronas}"></h:outputText>
+                </p:column>
+                
+               
+            </p:dataTable>
+            </p:fieldset>
+            </p:panel>        
+        </h:form>       
+    </h:body>
+    </ui:define>
+</ui:composition>
+
